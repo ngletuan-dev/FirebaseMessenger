@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -57,7 +58,7 @@ class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let button = UIButton()
         button.setTitle("Login", for: .normal)
-        button.backgroundColor = .link
+        button.backgroundColor = .systemGreen
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 12
         button.layer.masksToBounds = true
@@ -116,16 +117,6 @@ class LoginViewController: UIViewController {
                                    height: 52)
     }
     
-    @objc private func loginButtonTapped() {
-        guard let email = emailField.text, let password = passwordField.text,
-              !email.isEmpty, !password.isEmpty, password.count >= 6 else {
-                  alerUserLoginError()
-                  return
-              }
-        // Firebase Login
-    }
-    
-    
     func alerUserLoginError() {
         let alert = UIAlertController(title: "Woops",
                                       message: "Please enter all information to login",
@@ -136,22 +127,37 @@ class LoginViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    @objc private func loginButtonTapped() {
+        
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+        
+        guard let email = emailField.text, let password = passwordField.text,
+              !email.isEmpty, !password.isEmpty, password.count >= 6 else {
+                  alerUserLoginError()
+                  return
+              }
+        
+        // Firebase Login
+        FirebaseAuth.Auth.auth().signIn(withEmail: email, password: password, completion: { [weak self] authResult, error in
+            guard let strongSelf = self else {
+                return
+            }
+            guard let result = authResult, error == nil else {
+                print("Failed to login user with email: \(email)")
+                return
+            }
+            let user = result.user
+            print("Logged in User: \(user)")
+            strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+        })
+    }
+    
     @objc private func didTapRegister() {
         let vcRegister = RegisterViewController()
         vcRegister.title = "Create Account"
         navigationController?.pushViewController(vcRegister, animated: true)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
