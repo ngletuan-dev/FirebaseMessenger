@@ -138,6 +138,10 @@ class LoginViewController: UIViewController {
         loginFacebookButton.frame.origin.y = loginButton.bottom + 20
     }
     
+    
+
+// MARK: - Function ----------------------------------------------------------------------------
+    
     func alerUserLoginError() {
         let alert = UIAlertController(title: "Woops",
                                       message: "Please enter all information to login",
@@ -147,6 +151,9 @@ class LoginViewController: UIViewController {
         
         present(alert, animated: true)
     }
+    
+
+// MARK: - Objc --------------------------------------------------------------------------------
     
     @objc private func loginButtonTapped() {
         
@@ -181,6 +188,8 @@ class LoginViewController: UIViewController {
     }
 
 }
+
+// MARK: - Extension ----------------------------------------------------------------------------
 
 extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -224,15 +233,17 @@ extension LoginViewController: LoginButtonDelegate {
                 return
             }
             let nameComponents = userName.components(separatedBy: " ")
-            guard nameComponents.count == 2 else {
+            guard nameComponents.count == 3 else {
                 return
             }
             let firstName = nameComponents[0]
-            let lastName = nameComponents[1]
+            let middleName = nameComponents[1]
+            let lastName = nameComponents[2]
 
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
                     DatabaseManager.shared.inserUser(with: ChatAppUser(firstName: firstName,
+                                                                       middleName: middleName,
                                                                        lastName: lastName,
                                                                        emailAddress: email))
                 }

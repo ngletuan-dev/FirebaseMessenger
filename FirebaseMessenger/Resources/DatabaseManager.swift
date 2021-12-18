@@ -38,6 +38,7 @@ extension DatabaseManager {
     public func inserUser(with user: ChatAppUser) {
         database.child(user.safeEmail).setValue([
             "first_name": user.firstName,
+            "middle_name": user.middleName,
             "last_name": user.lastName
         ])
     }
@@ -45,6 +46,7 @@ extension DatabaseManager {
 
 struct ChatAppUser {
     let firstName: String
+    let middleName: String?
     let lastName: String
     let emailAddress: String
     

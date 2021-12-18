@@ -43,6 +43,21 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         return field
     }()
     
+//    private let middleNameField: UITextField = {
+//        let field = UITextField()
+//        field.autocapitalizationType = .none
+//        field.autocorrectionType = .no
+//        field.returnKeyType = .continue
+//        field.layer.cornerRadius = 12
+//        field.layer.borderWidth = 1
+//        field.layer.borderColor = UIColor.lightGray.cgColor
+//        field.placeholder = "Middle Name...(Option)"
+//        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
+//        field.leftViewMode = .always
+//        field.backgroundColor = .white
+//        return field
+//    }()
+    
     private let lastNameField: UITextField = {
         let field = UITextField()
         field.autocapitalizationType = .none
@@ -123,6 +138,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
         scrollView.addSubview(firstNameField)
+//        scrollView.addSubview(middleNameField)
         scrollView.addSubview(lastNameField)
         scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
@@ -151,6 +167,10 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
                                   y: imageView.bottom + 10,
                                   width: scrollView.width - 60,
                                   height: 52)
+//        middleNameField.frame = CGRect(x: 30,
+//                                  y: firstNameField.bottom + 10,
+//                                  width: scrollView.width - 60,
+//                                  height: 52)
         lastNameField.frame = CGRect(x: 30,
                                   y: firstNameField.bottom + 10,
                                   width: scrollView.width - 60,
@@ -168,6 +188,19 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
                                    width: scrollView.width - 60,
                                    height: 52)
     }
+
+    
+// MARK: - Function ----------------------------------------------------------------------------
+        
+    func alerUserLoginError(message: String = "Please enter all information to create a new account") {
+        let alert = UIAlertController(title: "Woops", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    
+    
+// MARK: - Objc ----------------------------------------------------------------------------
     
     @objc private func registerButtonTapped() {
         
@@ -175,12 +208,14 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         passwordField.resignFirstResponder()
         
         guard let firstName = firstNameField.text,
-              let lastName = lastNameField.text,
-              let email = emailField.text,
-              let password = passwordField.text,
               !firstName.isEmpty,
+//              let middleName = middleNameField.text,
+//              !middleName.isEmpty,
+              let lastName = lastNameField.text,
               !lastName.isEmpty,
+              let email = emailField.text,
               !email.isEmpty,
+              let password = passwordField.text,
               !password.isEmpty,
               password.count >= 6 else {
                   alerUserLoginError()
@@ -207,6 +242,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
                 }
                 
                 DatabaseManager.shared.inserUser(with: ChatAppUser(firstName: firstName,
+                                                                   middleName: nil,
                                                                    lastName: lastName,
                                                                    emailAddress: email))
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
@@ -225,14 +261,10 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
     //        navigationController?.pushViewController(vcRegister, animated: true)
     //    }
     //
-    
-    
-    func alerUserLoginError(message: String = "Please enter all information to create a new account") {
-        let alert = UIAlertController(title: "Woops", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-        present(alert, animated: true)
-    }
 }
+
+
+// MARK: - Extension ----------------------------------------------------------------------------
 
 extension RegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
