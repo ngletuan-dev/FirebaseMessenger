@@ -7,8 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import JGProgressHUD
 
 class RegisterViewController: UIViewController, UINavigationControllerDelegate {
+    
+    private let spinner = JGProgressHUD(style: .dark)
 
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -222,12 +225,19 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
                   return
               }
         
+        spinner.show(in: view)
+        
         // Firebase Register
         
         DatabaseManager.shared.userExists(with: email, completion: {[weak self] exists in
             guard let strongSelf = self else {
                 return
             }
+            
+            DispatchQueue.main.async {
+                strongSelf.spinner.dismiss()
+            }
+            
             guard !exists else {
                 //user already exists
                 strongSelf.alerUserLoginError(message: "Looks like a user account for that email address already exists.")
@@ -241,10 +251,33 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
                     return
                 }
                 
-                DatabaseManager.shared.inserUser(with: ChatAppUser(firstName: firstName,
-                                                                   middleName: nil,
-                                                                   lastName: lastName,
-                                                                   emailAddress: email))
+                UserDefaults.standard.setValue(email, forKey: "email")
+                UserDefaults.standard.setValue("\(firstName) \(lastName)", forKey: "name")
+
+
+                let chatUser = ChatAppUser(firstName: firstName,
+                                           lastName: lastName,
+                                           emailAddress: email)
+                DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
+//                    if success {
+//                        // upload image
+//                        guard let image = strongSelf.imageView.image,
+//                            let data = image.pngData() else {
+//                                return
+//                        }
+//                        let filename = chatUser.profilePictureFileName
+//                        StorageManager.shared.uploadProfilePicture(with: data, fileName: filename, completion: { result in
+//                            switch result {
+//                            case .success(let downloadUrl):
+//                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+//                                print(downloadUrl)
+//                            case .failure(let error):
+//                                print("Storage maanger error: \(error)")
+//                            }
+//                        })
+//                    }
+                })
+
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             })
         })

@@ -24,4 +24,13 @@ pod 'Firebase/Database'
 # Facebook
 pod 'FBSDKLoginKit'
 
+# Google
+pod 'GoogleSignIn'
+
+# MessageKit & RealmSwift
+pod 'MessageKit'
+pod 'JGProgressHUD'
+pod 'RealmSwift'
+pod 'SDWebImage'
+
 end

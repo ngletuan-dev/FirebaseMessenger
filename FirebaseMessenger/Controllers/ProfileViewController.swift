@@ -7,6 +7,8 @@
 
 import UIKit
 import FirebaseAuth
+import FBSDKLoginKit
+import GoogleSignIn
 
 class ProfileViewController: UIViewController {
 
@@ -45,22 +47,27 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         actionSheet.addAction(UIAlertAction(title: "Log Out",
                                       style: .destructive,
                                       handler: {[weak self] _ in
-            guard let strongSelf = self else {
-                return
-            }
-            do {
-                try FirebaseAuth.Auth.auth().signOut()
+                                guard let strongSelf = self else {
+                                    return
+                                }
+            
+                                // Log Out Facebook
+                                FBSDKLoginKit.LoginManager().logOut()
+                                // Log Out Google
+                                GIDSignIn.sharedInstance.signOut()
+                                
+                                    do {
+                                        try FirebaseAuth.Auth.auth().signOut()
                 
-                if FirebaseAuth.Auth.auth().currentUser == nil {
-                    let vcLogin = LoginViewController()
-                    let navLogin = UINavigationController(rootViewController: vcLogin)
-                    navLogin.modalPresentationStyle = .fullScreen
-                    strongSelf.present(navLogin, animated: true)
-                }
-            }
-            catch {
-                print("Failed to log out")
-            }
+                                        let vcLogin = LoginViewController()
+                                        let navLogin = UINavigationController(rootViewController: vcLogin)
+                                        navLogin.modalPresentationStyle = .fullScreen
+                                        strongSelf.present(navLogin, animated: true)
+                
+                                    }
+                                    catch {
+                                        print("Failed to log out")
+                                    }
         }))
         
         actionSheet.addAction(UIAlertAction(title: "Cancel",
