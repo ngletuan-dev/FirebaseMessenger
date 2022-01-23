@@ -42,7 +42,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         field.placeholder = "First name..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+//        field.backgroundColor = .white
         return field
     }()
     
@@ -72,7 +72,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         field.placeholder = "Last Name..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+//        field.backgroundColor = .white
         return field
     }()
     
@@ -87,7 +87,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         field.placeholder = "Email Address..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+//        field.backgroundColor = .white
         return field
     }()
     
@@ -102,7 +102,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         field.placeholder = "Password..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-        field.backgroundColor = .white
+//        field.backgroundColor = .white
         field.isSecureTextEntry = true
         return field
     }()
@@ -123,7 +123,6 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "Register"
-        view.backgroundColor = .white
         
 //        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
 //                                                            style: .done,
@@ -259,23 +258,23 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
                                            lastName: lastName,
                                            emailAddress: email)
                 DatabaseManager.shared.insertUser(with: chatUser, completion: { success in
-//                    if success {
-//                        // upload image
-//                        guard let image = strongSelf.imageView.image,
-//                            let data = image.pngData() else {
-//                                return
-//                        }
-//                        let filename = chatUser.profilePictureFileName
-//                        StorageManager.shared.uploadProfilePicture(with: data, fileName: filename, completion: { result in
-//                            switch result {
-//                            case .success(let downloadUrl):
-//                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
-//                                print(downloadUrl)
-//                            case .failure(let error):
-//                                print("Storage maanger error: \(error)")
-//                            }
-//                        })
-//                    }
+                    if success {
+                        // upload image
+                        guard let image = strongSelf.imageView.image,
+                            let data = image.pngData() else {
+                                return
+                        }
+                        let filename = chatUser.profilePictureFileName
+                        StorageManager.shared.uploadProfilePicture(with: data, fileName: filename, completion: { result in
+                            switch result {
+                            case .success(let downloadUrl):
+                                UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
+                                print(downloadUrl)
+                            case .failure(let error):
+                                print("Storage manager error: \(error)")
+                            }
+                        })
+                    }
                 })
 
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
@@ -361,3 +360,5 @@ extension RegisterViewController: UIImagePickerControllerDelegate {
         picker.dismiss(animated: true, completion: nil)
     }
 }
+
+
