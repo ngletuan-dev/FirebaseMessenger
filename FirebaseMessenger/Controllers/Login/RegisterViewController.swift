@@ -206,6 +206,8 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
     
     @objc private func registerButtonTapped() {
         
+        firstNameField.resignFirstResponder()
+        lastNameField.resignFirstResponder()
         emailField.resignFirstResponder()
         passwordField.resignFirstResponder()
         
@@ -246,7 +248,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
             FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion: {authResult, error in
                 
                 guard authResult != nil, error == nil else {
-                    print("Error cureating user")
+                    print("---Error cureating user")
                     return
                 }
                 
@@ -271,7 +273,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
                                 UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
                                 print(downloadUrl)
                             case .failure(let error):
-                                print("Storage manager error: \(error)")
+                                print("---Storage manager error: \(error)")
                             }
                         })
                     }

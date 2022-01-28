@@ -212,11 +212,32 @@ class LoginViewController: UIViewController {
             }
             
             guard let result = authResult, error == nil else {
-                print("Failed to login user with email: \(email)")
+                print("---Failed to login user with email: \(email)")
                 return
             }
             let user = result.user
-            print("Logged in User: \(user)")
+            
+            let safeEmail = DatabaseManager.safeEmail(emailAddress: email)
+            DatabaseManager.shared.getDataFor(path: safeEmail, completion: { result in
+                switch result {
+                case .success(let data):
+                    guard let userData = data as? [String: Any],
+                          let firstName = userData["first_name"] as? String,
+                          let lastName = userData["last_name"] as? String else {
+                              return
+                          }
+                    UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
+
+                case .failure(let error):
+                print("---Failed to read data with error \(error)")
+                }
+            })
+
+            
+            UserDefaults.standard.set(email, forKey: "email")
+
+            
+            print("---Logged in User: \(user)")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
@@ -251,7 +272,7 @@ extension LoginViewController: LoginButtonDelegate {
     
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
         guard let token = result?.token?.tokenString else {
-            print("User failed to login with Facebook")
+            print("---User failed to login with Facebook")
             return
         }
         
@@ -262,7 +283,7 @@ extension LoginViewController: LoginButtonDelegate {
                                                          httpMethod: .get)
         facebookRequest.start(completion: { _, result, error in
             guard let result = result as? [String: Any], error == nil else {
-                print("Failed to make facebook graph request")
+                print("---Failed to make facebook graph request")
                 return
             }
             
@@ -274,9 +295,12 @@ extension LoginViewController: LoginButtonDelegate {
                   let picture = result["picture"] as? [String: Any],
                   let data = picture["data"] as? [String: Any],
                   let pictureUrl = data["url"] as? String else {
-                      print("Failed to get email and name from facebook result")
+                      print("---Failed to get email and name from facebook result")
                       return
                   }
+            
+            UserDefaults.standard.set(email, forKey: "email")
+            UserDefaults.standard.set("\(firstName) \(lastName)", forKey: "name")
 
             DatabaseManager.shared.userExists(with: email, completion: { exists in
                 if !exists {
@@ -290,15 +314,15 @@ extension LoginViewController: LoginButtonDelegate {
                                 return
                             }
 
-                            print("Downloading data from facebook image")
+                            print("---Downloading data from facebook image")
 
                             URLSession.shared.dataTask(with: url, completionHandler: { data, _,_ in
                                 guard let data = data else {
-                                    print("Failed to get data from facebook")
+                                    print("---Failed to get data from facebook")
                                     return
                                 }
 
-                                print("got data from FB, uploading...")
+                                print("---got data from FB, uploading...")
 
                                 // upload iamge
                                 let filename = chatUser.profilePictureFileName
@@ -308,7 +332,7 @@ extension LoginViewController: LoginButtonDelegate {
                                         UserDefaults.standard.set(downloadUrl, forKey: "profile_picture_url")
                                         print(downloadUrl)
                                     case .failure(let error):
-                                        print("Storage manager error: \(error)")
+                                        print("---Storage manager error: \(error)")
                                     }
                                 })
                             }).resume()
@@ -324,11 +348,11 @@ extension LoginViewController: LoginButtonDelegate {
                 }
                 guard authResult != nil, error == nil else {
                     if let error = error {
-                        print("Facebook credential login faile, MFA may be needed - \(error)")
+                        print("---Facebook credential login faile, MFA may be needed - \(error)")
                     }
                     return
                 }
-                print("Successfully logged user in")
+                print("---Successfully logged user in")
                 strongSelf.navigationController?.dismiss(animated: true, completion: nil)
             })
         })

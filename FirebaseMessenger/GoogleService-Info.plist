@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>925931958200-551hn0677ojun9a68n7oc1b3tjsrul5g.apps.googleusercontent.com</string>
+	<string>546678509348-qlbi2s68u2hsmc5d2fa91unth1ml004l.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.925931958200-551hn0677ojun9a68n7oc1b3tjsrul5g</string>
+	<string>com.googleusercontent.apps.546678509348-qlbi2s68u2hsmc5d2fa91unth1ml004l</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBoWOjLdM7eo7GSbjhNv4yVoENciOV_aXI</string>
+	<string>AIzaSyA7pUryA9t46sghnvu9RltMtHNyWjPkL74</string>
 	<key>GCM_SENDER_ID</key>
-	<string>925931958200</string>
+	<string>546678509348</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.tuannguyen.FirebaseMessenger</string>
 	<key>PROJECT_ID</key>
-	<string>fir-messenger-a683b</string>
+	<string>fir-swiftmessenger</string>
 	<key>STORAGE_BUCKET</key>
-	<string>fir-messenger-a683b.appspot.com</string>
+	<string>fir-swiftmessenger.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,8 +29,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:925931958200:ios:ac3b0970b11fd9dff8294d</string>
+	<string>1:546678509348:ios:d1bbeee37611b365916db1</string>
     <key>DATABASE_URL</key>
-    <string>https://fir-messenger-a683b-default-rtdb.europe-west1.firebasedatabase.app</string>
+        <string>https://fir-swiftmessenger-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>
