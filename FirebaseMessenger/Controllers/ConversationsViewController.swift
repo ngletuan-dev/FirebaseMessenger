@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import JGProgressHUD
 
-struct Conversations {
+struct Conversation {
     let id: String
     let name: String
     let otherUserEmail: String
@@ -26,7 +26,7 @@ class ConversationsViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style:  .dark)
     
-    private var conversations = [Conversations]()
+    private var conversations = [Conversation]()
     
     private let tableView: UITableView = {
         let table = UITableView()

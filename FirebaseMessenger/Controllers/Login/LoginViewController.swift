@@ -232,11 +232,7 @@ class LoginViewController: UIViewController {
                 print("---Failed to read data with error \(error)")
                 }
             })
-
-            
             UserDefaults.standard.set(email, forKey: "email")
-
-            
             print("---Logged in User: \(user)")
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })

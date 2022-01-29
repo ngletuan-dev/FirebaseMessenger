@@ -8,7 +8,6 @@
 import UIKit
 import MessageKit
 import InputBarAccessoryView
-import SwiftUI
 
 struct Message: MessageType {
     public var sender: SenderType
@@ -62,7 +61,7 @@ class ChatViewController: MessagesViewController {
     
     public var isNewConversation = false
     public let otherUserEmail: String
-    private let conversationId: String?
+    private var conversationId: String?
     
     private var messages = [Message]()
     
@@ -99,7 +98,7 @@ class ChatViewController: MessagesViewController {
         messageInputBar.delegate = self
     }
     
-    private func listenForMessages(id: String, shouldScrollToBottom: Bool) {
+    private func listenForMessages(id: String, shouldScrollToLastItem: Bool) {
         DatabaseManager.shared.getAllMessagesForConversation(with: id, completion: {[weak self] result in
             switch result {
             case .success(let messages):
@@ -113,8 +112,8 @@ class ChatViewController: MessagesViewController {
                 DispatchQueue.main.async {
                     self?.messagesCollectionView.reloadDataAndKeepOffset()
                     
-                    if shouldScrollToBottom {
-                        self?.messagesCollectionView.scrollToBottom()
+                    if shouldScrollToLastItem {
+                        self?.messagesCollectionView.scrollToLastItem()
                     }
                 }
             case .failure(let error):
@@ -127,7 +126,7 @@ class ChatViewController: MessagesViewController {
         super.viewDidAppear(animated)
         messageInputBar.inputTextView.becomeFirstResponder()
         if let conversationId = conversationId {
-            listenForMessages(id: conversationId, shouldScrollToBottom: true)
+            listenForMessages(id: conversationId, shouldScrollToLastItem: true)
         }
     }
 }
@@ -140,23 +139,36 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
         let messageId = createMessageId() else {
             return
         }
-        print("Sending: \(text)")
+        print("---Sending: \(text)")
+        
+        let message = Message(sender: selfSender,
+                              messageId: messageId,
+                              sentDate: Date(),
+                              kind: .text(text))
+        
         //Send Massage
         if isNewConversation {
             //create convo in databse
-            let message = Message(sender: selfSender,
-                                  messageId: messageId,
-                                  sentDate: Date(),
-                                  kind: .text(text))
-            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "User", firstMessage: message, completion: { success in
+            DatabaseManager.shared.createNewConversation(with: otherUserEmail, name: self.title ?? "User", firstMessage: message, completion: {[weak self] success in
                 if success {
                     print("---message sent")
+                    self?.isNewConversation = false
                 } else {
                     print("---failed ot send")
                 }
             })
         } else {
+            guard let conversationId = conversationId, let name = self.title else {
+                return
+            }
             //append to existing conversation data
+            DatabaseManager.shared.sendMessage(to: conversationId, otherUserEmail: otherUserEmail, name: name, newMessage: message, completion: {success in
+                if success {
+                    print("---message sent")
+                } else {
+                    print("---Failed to send")
+                }
+            })
         }
     }
     

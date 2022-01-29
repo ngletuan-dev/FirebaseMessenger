@@ -60,7 +60,7 @@ class ConversationTableViewCell: UITableViewCell {
                                         height: (contentView.height-20)/2)
     }
     
-    public func configure(with model: Conversations) {
+    public func configure(with model: Conversation) {
         self.userMessageLabel.text = model.latestMessage.text
         self.userNameLabel.text = model.name
         
