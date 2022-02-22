@@ -2,29 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb262955459155852</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.546678509348-qlbi2s68u2hsmc5d2fa91unth1ml004l</string>
-			</array>
-		</dict>
-	</array>
-	<key>FacebookAppID</key>
-	<string>262955459155852</string>
-	<key>FacebookClientToken</key>
-	<string>b0e351438cbe542f78667c8ae91f8618</string>
-	<key>FacebookDisplayName</key>
-	<string>FirebaseMessenger</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -62,5 +39,38 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow access to take profile picture.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Please allow access to select a photo for your profile.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Please allow access to send audio and video messages.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb262955459155852</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.546678509348-qlbi2s68u2hsmc5d2fa91unth1ml004l</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>262955459155852</string>
+	<key>FacebookClientToken</key>
+	<string>b0e351438cbe542f78667c8ae91f8618</string>
+	<key>FacebookDisplayName</key>
+	<string>FirebaseMessenger</string>
+	<key>FirebaseScreenReportingEnabled</key>
+	<false/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 </dict>
 </plist>

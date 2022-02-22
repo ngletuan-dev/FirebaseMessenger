@@ -11,7 +11,7 @@ import FBSDKLoginKit
 import GoogleSignIn
 import JGProgressHUD
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
     
     private let spinner = JGProgressHUD(style: .dark)
     
@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
         field.placeholder = "Email Address..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-//        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemGroupedBackground
         return field
     }()
     
@@ -55,7 +55,7 @@ class LoginViewController: UIViewController {
         field.placeholder = "Password..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-//        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemGroupedBackground
         field.isSecureTextEntry = true
         return field
     }()
@@ -86,6 +86,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "Login"
+        view.backgroundColor = .systemBackground
         
         loginObserver = NotificationCenter.default.addObserver(forName: .didLogInNotification, object: nil, queue: .main, using: { [weak self] _ in
             guard let strongSelf = self else {
@@ -94,6 +95,8 @@ class LoginViewController: UIViewController {
 
             strongSelf.navigationController?.dismiss(animated: true, completion: nil)
         })
+        
+//        GIDSignIn.sharedInstance()?.presentingViewController = self
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
                                                             style: .done,
@@ -117,8 +120,10 @@ class LoginViewController: UIViewController {
         scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
         scrollView.addSubview(loginButton)
+        
         // Add Facebook Button
         scrollView.addSubview(loginFacebookButton)
+        
         //Add Google Login
         scrollView.addSubview(googleLogInButton)
         googleLogInButton.addTarget(self, action: #selector(googleSignInButtonTapped), for: .touchUpInside)

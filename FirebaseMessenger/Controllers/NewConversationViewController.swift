@@ -8,15 +8,15 @@
 import UIKit
 import JGProgressHUD
 
-class NewConversationViewController: UIViewController {
+final class NewConversationViewController: UIViewController {
     
-    public var completion: (([String: String]) -> (Void))?
+    public var completion: ((SearchResult) -> (Void))?
     
     private let spinner = JGProgressHUD(style: .dark)
     
     private var users = [[String: String]]()
     
-    private var results = [[String: String]]()
+    private var results = [SearchResult]()
     
     private var hasFetched = false
     
@@ -29,8 +29,8 @@ class NewConversationViewController: UIViewController {
     private let tableView: UITableView = {
        let table = UITableView()
         table.isHidden = true
-        table.register(UITableViewCell.self,
-                       forCellReuseIdentifier: "cell")
+        table.register(NewConversationCell.self,
+                       forCellReuseIdentifier: NewConversationCell.identifier)
         return table
     }()
     
@@ -47,6 +47,7 @@ class NewConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        view.backgroundColor = .systemBackground
         view.addSubview(noResultsLabel)
         view.addSubview(tableView)
         
@@ -54,14 +55,14 @@ class NewConversationViewController: UIViewController {
         tableView.delegate = self
         
         searchBar.delegate = self
-        view.backgroundColor = .white
+        searchBar.becomeFirstResponder()
+        
         navigationController?.navigationBar.topItem?.titleView = searchBar
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel",
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(dismissSelf))
         
-        searchBar.becomeFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,8 +86,10 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = results[indexPath.row]["name"]
+        let model = results[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewConversationCell.identifier,
+                                                 for: indexPath) as! NewConversationCell
+        cell.configure(with: model)
         return cell
     }
     
@@ -98,6 +101,10 @@ extension NewConversationViewController: UITableViewDelegate, UITableViewDataSou
         dismiss(animated: true, completion: {[weak self] in
             self?.completion?(targetUserData)
         })
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
     }
 }
 
@@ -113,7 +120,7 @@ extension NewConversationViewController: UISearchBarDelegate {
         results.removeAll()
         spinner.show(in: view)
         
-        self.searchUsers(query: text)
+        searchUsers(query: text)
     }
     
     func searchUsers(query: String) {
@@ -138,18 +145,32 @@ extension NewConversationViewController: UISearchBarDelegate {
     
     func filterUsers(with term: String) {
         // update the UI: either show results or show no results label
-        guard hasFetched else {
+        guard let curentUserEmail = UserDefaults.standard.value(forKey: "email") as? String, hasFetched else {
             return
         }
         
+        let safeEmail = DatabaseManager.safeEmail(emailAddress: curentUserEmail)
+        
         self.spinner.dismiss()
         
-        let results: [[String: String]] = self.users.filter({
+        let results: [SearchResult] = users.filter({
+            guard let email = $0["email"], email != safeEmail else {
+                      return false
+                  }
+            
             guard let name = $0["name"]?.lowercased() else {
                 return false
             }
             return name.hasPrefix(term.lowercased())
+        }).compactMap({
+            guard let email = $0["email"],
+                  let name = $0["name"] else {
+                return nil
+            }
+            
+            return SearchResult(name: name, email: email)
         })
+        
         self.results = results
         
         updateUI()

@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import JGProgressHUD
 
-class RegisterViewController: UIViewController, UINavigationControllerDelegate {
+final class RegisterViewController: UIViewController, UINavigationControllerDelegate {
     
     private let spinner = JGProgressHUD(style: .dark)
 
@@ -42,7 +42,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         field.placeholder = "First name..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-//        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemGroupedBackground
         return field
     }()
     
@@ -72,7 +72,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         field.placeholder = "Last Name..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-//        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemGroupedBackground
         return field
     }()
     
@@ -87,7 +87,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         field.placeholder = "Email Address..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-//        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemGroupedBackground
         return field
     }()
     
@@ -102,7 +102,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         field.placeholder = "Password..."
         field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
         field.leftViewMode = .always
-//        field.backgroundColor = .white
+        field.backgroundColor = .secondarySystemGroupedBackground
         field.isSecureTextEntry = true
         return field
     }()
@@ -123,11 +123,7 @@ class RegisterViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "Register"
-        
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Register",
-//                                                            style: .done,
-//                                                            target: self,
-//                                                            action: #selector(didTapRegister))
+        view.backgroundColor = .systemBackground
         
         registerButton.addTarget(self,
                               action: #selector(registerButtonTapped),
