@@ -25,8 +25,6 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
         imageView.tintColor = .gray
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
-//        imageView.layer.borderWidth = 2
-//        imageView.layer.borderColor = UIColor.lightGray.cgColor
         return imageView
         
     }()
@@ -45,21 +43,6 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
         field.backgroundColor = .secondarySystemGroupedBackground
         return field
     }()
-    
-//    private let middleNameField: UITextField = {
-//        let field = UITextField()
-//        field.autocapitalizationType = .none
-//        field.autocorrectionType = .no
-//        field.returnKeyType = .continue
-//        field.layer.cornerRadius = 12
-//        field.layer.borderWidth = 1
-//        field.layer.borderColor = UIColor.lightGray.cgColor
-//        field.placeholder = "Middle Name...(Option)"
-//        field.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 0))
-//        field.leftViewMode = .always
-//        field.backgroundColor = .white
-//        return field
-//    }()
     
     private let lastNameField: UITextField = {
         let field = UITextField()
@@ -136,7 +119,6 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
         scrollView.addSubview(firstNameField)
-//        scrollView.addSubview(middleNameField)
         scrollView.addSubview(lastNameField)
         scrollView.addSubview(emailField)
         scrollView.addSubview(passwordField)
@@ -165,10 +147,6 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
                                   y: imageView.bottom + 10,
                                   width: scrollView.width - 60,
                                   height: 52)
-//        middleNameField.frame = CGRect(x: 30,
-//                                  y: firstNameField.bottom + 10,
-//                                  width: scrollView.width - 60,
-//                                  height: 52)
         lastNameField.frame = CGRect(x: 30,
                                   y: firstNameField.bottom + 10,
                                   width: scrollView.width - 60,
@@ -209,8 +187,6 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
         
         guard let firstName = firstNameField.text,
               !firstName.isEmpty,
-//              let middleName = middleNameField.text,
-//              !middleName.isEmpty,
               let lastName = lastNameField.text,
               !lastName.isEmpty,
               let email = emailField.text,
@@ -284,13 +260,6 @@ final class RegisterViewController: UIViewController, UINavigationControllerDele
         presentPhotoActionSheet()
         print("Change pic called")
     }
-    
-    //    @objc private func didTapRegister() {
-    //        let vcRegister = RegisterViewController()
-    //        vcRegister.title = "Create Account"
-    //        navigationController?.pushViewController(vcRegister, animated: true)
-    //    }
-    //
 }
 
 

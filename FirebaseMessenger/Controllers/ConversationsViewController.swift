@@ -13,7 +13,7 @@ import JGProgressHUD
 ///Controller that shows list of conversations
 final class ConversationsViewController: UIViewController {
     
-    private let spinner = JGProgressHUD(style:  .dark)
+    private let spinner = JGProgressHUD(style: .dark)
     
     private var conversations = [Conversation]()
     
@@ -37,6 +37,7 @@ final class ConversationsViewController: UIViewController {
 
     private var loginObserver: NSObjectProtocol?
     
+// MARK: - Override ----------------------------------------------------------------------------
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -54,6 +55,36 @@ final class ConversationsViewController: UIViewController {
             }
             strongSelf.startListeningForConversation()
         })
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
+        noConversationLabel.frame = CGRect(x: 10,
+                                           y: (view.height-100)/2,
+                                           width: view.width-10,
+                                           height: 100)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        validateAuth()
+        
+    }
+
+// MARK: - Function ----------------------------------------------------------------------------
+    private func validateAuth(){
+        if FirebaseAuth.Auth.auth().currentUser == nil {
+            let vcLogin = LoginViewController()
+            let navLogin = UINavigationController(rootViewController: vcLogin)
+            navLogin.modalPresentationStyle = .fullScreen
+            present(navLogin, animated: false)
+        }
+    }
+    
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func startListeningForConversation() {
@@ -145,36 +176,10 @@ final class ConversationsViewController: UIViewController {
             }
         })
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
-        noConversationLabel.frame = CGRect(x: 10,
-                                           y: (view.height-100)/2,
-                                           width: view.width-10,
-                                           height: 100)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        validateAuth()
-        
-    }
-    private func validateAuth(){
-        if FirebaseAuth.Auth.auth().currentUser == nil {
-            let vcLogin = LoginViewController()
-            let navLogin = UINavigationController(rootViewController: vcLogin)
-            navLogin.modalPresentationStyle = .fullScreen
-            present(navLogin, animated: false)
-        }
-    }
-    
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
 }
 
+
+// MARK: - Extension ----------------------------------------------------------------------------
 extension ConversationsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -19,7 +19,7 @@
 		AB1DB4E9279B2D1600F43D91 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1DB4E8279B2D1600F43D91 /* StorageManager.swift */; };
 		AB454007276CDFA7005B8A10 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB454006276CDFA6005B8A10 /* DatabaseManager.swift */; };
 		AB4EB8C72799FEB200B7DEC6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4EB8C62799FEB200B7DEC6 /* ChatViewController.swift */; };
-		AB678FA8279DEABE0001ED63 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB678FA7279DEABE0001ED63 /* GoogleService-Info.plist */; };
+		AB72CE17284E756B000DFDD8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB72CE16284E756B000DFDD8 /* GoogleService-Info.plist */; };
 		AB8761E227A3394000117E44 /* ConversationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8761E127A3394000117E44 /* ConversationTableViewCell.swift */; };
 		AB9BF44D27B6C3F500215DAD /* NewConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9BF44C27B6C3F500215DAD /* NewConversationCell.swift */; };
 		ABA30C5227C5084B004A516A /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA30C5127C5084B004A516A /* ConversationModel.swift */; };
@@ -72,7 +72,7 @@
 		AB1DB4E8279B2D1600F43D91 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		AB454006276CDFA6005B8A10 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		AB4EB8C62799FEB200B7DEC6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		AB678FA7279DEABE0001ED63 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AB72CE16284E756B000DFDD8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AB8761E127A3394000117E44 /* ConversationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationTableViewCell.swift; sourceTree = "<group>"; };
 		AB9BF44C27B6C3F500215DAD /* NewConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewConversationCell.swift; sourceTree = "<group>"; };
 		ABA30C5127C5084B004A516A /* ConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModel.swift; sourceTree = "<group>"; };
@@ -243,8 +243,8 @@
 				AB1B4AF327679344009B68F7 /* Controllers */,
 				AB1B4AF8276793CE009B68F7 /* Strorybroads */,
 				ABF830482767906F00D4655F /* Assets.xcassets */,
+				AB72CE16284E756B000DFDD8 /* GoogleService-Info.plist */,
 				ABF8304D2767906F00D4655F /* Info.plist */,
-				AB678FA7279DEABE0001ED63 /* GoogleService-Info.plist */,
 			);
 			path = FirebaseMessenger;
 			sourceTree = "<group>";
@@ -278,7 +278,6 @@
 				ABF830392767906C00D4655F /* Frameworks */,
 				ABF8303A2767906C00D4655F /* Resources */,
 				66143B2C05DFB6BF882339ED /* [CP] Embed Pods Frameworks */,
-				ABD8ACFF27C3C92200697A95 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -377,7 +376,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABF8304C2767906F00D4655F /* LaunchScreen.storyboard in Resources */,
-				AB678FA8279DEABE0001ED63 /* GoogleService-Info.plist in Resources */,
+				AB72CE17284E756B000DFDD8 /* GoogleService-Info.plist in Resources */,
 				ABF830492767906F00D4655F /* Assets.xcassets in Resources */,
 				ABF830472767906C00D4655F /* Main.storyboard in Resources */,
 			);
@@ -500,23 +499,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FirebaseMessenger/Pods-FirebaseMessenger-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ABD8ACFF27C3C92200697A95 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -637,7 +619,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -697,7 +679,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -726,7 +708,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FirebaseMessenger/Info.plist;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Please allow access to take a profile picture!";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile!";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take profile picture.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow access to send audio and video messages.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -759,7 +743,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FirebaseMessenger/Info.plist;
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Please allow access to take a profile picture!";
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile!";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please allow access to take profile picture.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Please allow access to send audio and video messages.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow access to select a photo for your profile.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

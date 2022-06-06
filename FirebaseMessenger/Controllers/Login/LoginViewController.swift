@@ -81,7 +81,10 @@ final class LoginViewController: UIViewController {
     private let googleLogInButton = GIDSignInButton()
     
     private var loginObserver: NSObjectProtocol?
-
+    
+    
+// MARK: - Override ----------------------------------------------------------------------------
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
